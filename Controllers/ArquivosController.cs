@@ -37,7 +37,7 @@ namespace azureblobstorageapi.Controllers
             return Ok(blob.Uri.ToString());
         }
 
-        [HttpGet("Downloadd/{nome}")]
+        [HttpGet("Download/{nome}")]
         public IActionResult DownloadArquivo(string nome)
         {
             BlobContainerClient container = new(_connectionString, _containerName);
