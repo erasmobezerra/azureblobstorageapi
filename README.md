@@ -1,6 +1,6 @@
 # 🚀 Azure Blob Storage API
 
-API de exemplo em ASP.NET Core que demonstra o uso do Azure Blob Storage para upload, download, listagem e remoção de arquivos.
+Projeto desenvolvido no curso da DIO "Armazenamento de Dados na Azure". Uma API de exemplo em ASP.NET Core que demonstra o uso do Azure Blob Storage para upload, download, listagem e remoção de arquivos.
 
 ## 🎯 Objetivo
 
