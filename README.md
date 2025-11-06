@@ -31,7 +31,7 @@ Projeto simples para gerenciar arquivos em um container do Azure Blob Storage. S
 2. Acesse "Containers" e crie um container (ex.: `meucontainer`) com acesso privado.
 3. Copie a Connection String em "Access keys" para usar na aplicação.
 
-Você também pode usar o Azure Storage Explorer para inspecionar blobs ou Azurite para rodar localmente.
+Você também pode usar o Azure Storage Explorer para inspecionar o container.
 
 ## ⚙️ Configuração necessária
 
@@ -55,6 +55,7 @@ IMPORTANTE: nunca comite connection strings ou chaves de acesso em repositórios
 
 
 ## ▶️ Como executar localmente e acessar a documentação com Swagger
+
 ```powershell
 # Clone o repositorio
 git clone https://github.com/erasmobezerra/azureblobstorageapi.git
@@ -69,6 +70,55 @@ dotnet restore
 dotnet watch run
 ```
 
+## Usar o Azurite para simular Azure Blob Storage API
+
+Para evitar custos com recursos do Azure, você pode simular uma conta de armazenamento local com o **Azurite**. Sigo os passos a seguir:
+
+#### 1. Crie o container com o Azure Storage Explorer
+
+Baixe e instale o Azure Storage Explorer. Em Explorer, acesse Conta de Armazenamento > Emulador - Portas Padrão Local > Conteineres de Blob e crie um novo container de blob chamado "arquivos".
+
+#### 2. Configurar `appsettings.Development.json`
+
+Na raiz do projeto, edite ou crie um arquivo 'appsettings.Development.json' e inclua o json abaixo que contém a string de conexão e o nome do container:
+
+```bash
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "BlobConnectionString": "UseDevelopmentStorage=true",
+    "BlobContainerName": "arquivos"
+  }
+}
+```
+
+#### 3. Instalar Azurite
+
+Para evitar custos com recursos do Azure, você pode simular uma conta de armazenamento local com o **Azurite**:
+
+```bash
+npm install -g azurite
+```
+
+#### 4. Executar Azurite
+
+```bash
+azurite
+```
+
+### 3. Abra outro terminal no mesmo diretório raiz e execute o projeto
+
+```bash
+dotnet watch run
+```
+
+---
+
 ## 🔌 Endpoints disponíveis no Swagger
 
 Acesse [https://localhost:7295/swagger/index.html](https://localhost:7295/swagger/index.html) Ou navegue para `/swagger` na URL base da aplicação
@@ -77,8 +127,6 @@ Acesse [https://localhost:7295/swagger/index.html](https://localhost:7295/swagge
 - GET `/api/Arquivos/Download/{nome}` — Download do arquivo pelo nome.
 - DELETE `/api/Arquivos/Apagar/{nome}` — Deleta o arquivo pelo nome.
 - GET `/api/Arquivos/Listar` — Lista arquivos no container. Retorna array de objetos `BlobDto` com propriedades: `Nome`, `Tipo`, `Uri`.
-
-Observação: ao enviar o arquivo no `Upload`, o nome do blob será o `arquivo.FileName` recebido. Ajuste conforme necessário para evitar colisões de nomes.
 
 ## 🤝 Como contribuir
 
